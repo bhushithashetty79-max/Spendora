@@ -8,10 +8,10 @@ import { CATEGORIES, type Category, type Expense, type Budget, type ParsedExpens
 
 const CATEGORY_KEYWORDS: Record<Category, string[]> = {
   Food: ['mess', 'canteen', 'food', 'lunch', 'dinner', 'breakfast', 'tea', 'coffee', 'cafe', 'restaurant', 'snack', 'zomato', 'swiggy', 'dominos', 'mcdonalds', 'pizza', 'burger', 'chai', 'samosa', 'dosa', 'biryani', 'tiffin', 'groceries', 'grocery', 'milk', 'bread', 'fruits'],
-  Travel: ['auto', 'rickshaw', 'cab', 'uber', 'ola', 'rapido', 'metro', 'bus', 'train', 'irctc', 'fuel', 'petrol', 'diesel', 'bike', 'parking', 'toll', 'flight', 'indigo', 'spicejet'],
-  Education: ['book', 'books', 'stationery', 'pen', 'notes', 'course', 'udemy', 'coursera', 'certification', 'exam', 'fee', 'fees', 'tuition', 'library', 'print', 'xerox', 'photocopy', 'lab'],
-  Entertainment: ['movie', 'pvr', 'netflix', 'prime', 'hotstar', 'spotify', 'game', 'gaming', 'steam', 'concert', 'show', 'ticket', 'museum', 'arcade', 'bowling'],
-  Shopping: ['shirt', 'jeans', 'clothes', 'clothing', 'shoes', 'sneakers', 'flipkart', 'amazon', 'myntra', 'ajio', 'mall', 'accessory', 'bag', 'watch', 'gadget', 'electronics', 'phone', 'earbuds'],
+  Travel: ['travel', 'trip', 'auto', 'rickshaw', 'cab', 'uber', 'ola', 'rapido', 'metro', 'bus', 'train', 'irctc', 'fuel', 'petrol', 'diesel', 'bike', 'parking', 'toll', 'flight', 'indigo', 'spicejet'],
+  Education: ['education', 'study', 'book', 'books', 'stationery', 'pen', 'notes', 'course', 'udemy', 'coursera', 'certification', 'exam', 'fee', 'fees', 'tuition', 'library', 'print', 'xerox', 'photocopy', 'lab'],
+  Entertainment: ['entertainment', 'movie', 'pvr', 'netflix', 'prime', 'hotstar', 'spotify', 'game', 'gaming', 'steam', 'concert', 'show', 'ticket', 'museum', 'arcade', 'bowling'],
+  Shopping: ['shopping', 'shirt', 'jeans', 'clothes', 'clothing', 'shoes', 'sneakers', 'flipkart', 'amazon', 'myntra', 'ajio', 'mall', 'accessory', 'bag', 'watch', 'gadget', 'electronics', 'phone', 'earbuds'],
   Bills: ['bill', 'recharge', 'prepaid', 'postpaid', 'wifi', 'internet', 'electricity', 'water', 'gas', 'rent', 'emi', 'subscription', 'phone bill', 'mobile'],
   Other: [],
 };
