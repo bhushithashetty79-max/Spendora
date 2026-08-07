@@ -20,7 +20,7 @@ const ITEMS: NavItem[] = [
 export function BottomNav({ active, onChange }: { active: TabId; onChange: (id: TabId) => void }) {
   return (
     <nav className="fixed bottom-0 inset-x-0 z-40 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2">
-      <div className="mx-auto max-w-2xl glass rounded-3xl px-2 py-1.5 flex items-center justify-between shadow-lift">
+      <div className="mx-auto max-w-2xl glass rounded-3xl px-1 py-1.5 flex items-center justify-between shadow-lift gap-0.5">
         {ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
@@ -28,13 +28,13 @@ export function BottomNav({ active, onChange }: { active: TabId; onChange: (id: 
             <button
               key={item.id}
               onClick={() => onChange(item.id)}
-              className={`nav-item btn-press ${isActive ? 'nav-item-active' : ''}`}
+              className={`nav-item btn-press flex-1 min-w-0 ${isActive ? 'nav-item-active' : ''}`}
             >
               {isActive && (
                 <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full gradient-mint shadow-glow-sm" />
               )}
-              <Icon className="w-5 h-5" strokeWidth={isActive ? 2.4 : 2} />
-              <span>{item.label}</span>
+              <Icon className="w-5 h-5 shrink-0" strokeWidth={isActive ? 2.4 : 2} />
+              <span className="truncate max-w-full">{item.label}</span>
             </button>
           );
         })}

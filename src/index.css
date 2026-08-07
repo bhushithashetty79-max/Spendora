@@ -31,14 +31,17 @@
     width: 10px;
     height: 10px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     @apply bg-ink-700 rounded-full;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-ink-600;
   }
@@ -68,8 +71,7 @@
   }
 
   .input-field {
-    @apply w-full rounded-2xl bg-ink-800/80 border border-white/[0.06] px-4 py-3 text-slate-100 placeholder:text-slate-500
-      outline-none transition focus:border-mint-400/50 focus:ring-2 focus:ring-mint-400/20;
+    @apply w-full rounded-2xl bg-ink-800/80 border border-white/[0.06] px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-mint-400/50 focus:ring-2 focus:ring-mint-400/20;
   }
 
   .chip {
@@ -79,10 +81,12 @@
   .gradient-mint {
     background-image: linear-gradient(135deg, #1FE89F 0%, #14B8A6 100%);
   }
+
   .gradient-mint-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, #4FF7B8 0%, #2DD4BF 100%);
   }
+
   .gradient-mint-soft {
     background-image: linear-gradient(135deg, rgba(31, 232, 159, 0.18) 0%, rgba(20, 184, 166, 0.12) 100%);
   }
@@ -92,9 +96,9 @@
   }
 
   .nav-item {
-    @apply relative flex flex-col items-center justify-center gap-0.5 rounded-2xl px-3 py-2 text-[11px] font-medium
-      text-slate-400 transition-colors duration-200 hover:text-slate-200;
+    @apply relative flex flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-2 text-[10px] sm:text-[11px] font-medium text-slate-400 transition-colors duration-200 hover:text-slate-200;
   }
+
   .nav-item-active {
     @apply text-mint-300;
   }
@@ -104,16 +108,20 @@
   .text-balance {
     text-wrap: balance;
   }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .perspective {
     perspective: 1000px;
   }
+
   .preserve-3d {
     transform-style: preserve-3d;
   }
@@ -130,6 +138,7 @@ input[type='range'].spendra-range {
   outline: none;
   cursor: pointer;
 }
+
 input[type='range'].spendra-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -142,9 +151,11 @@ input[type='range'].spendra-range::-webkit-slider-thumb {
   cursor: pointer;
   transition: transform 0.15s ease;
 }
+
 input[type='range'].spendra-range::-webkit-slider-thumb:hover {
   transform: scale(1.12);
 }
+
 input[type='range'].spendra-range::-moz-range-thumb {
   width: 22px;
   height: 22px;
