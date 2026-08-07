@@ -223,11 +223,10 @@ export function DashboardScreen() {
           <button
             key={c}
             onClick={() => setFilter(c)}
-            className={`chip whitespace-nowrap btn-press ${
-              filter === c
-                ? 'border-mint-400/50 bg-mint-400/15 text-mint-200'
-                : 'border-white/[0.06] bg-ink-800/60 text-slate-400'
-            }`}
+            className={`chip whitespace-nowrap btn-press ${filter === c
+              ? 'border-mint-400/50 bg-mint-400/15 text-mint-200'
+              : 'border-white/[0.06] bg-ink-800/60 text-slate-400'
+              }`}
           >
             {c}
           </button>
@@ -277,27 +276,26 @@ export function DashboardScreen() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAdd(input)}
             placeholder={listening ? 'Listening…' : 'Add expense, e.g. "₹120 food at mess"'}
-            className="flex-1 bg-transparent px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none"
+            className="flex-1 min-w-0 bg-transparent px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none"
           />
           <button
             onClick={handleMic}
-            className={`btn-press w-10 h-10 rounded-2xl flex items-center justify-center transition ${
-              listening ? 'gradient-mint text-ink-950 shadow-glow' : 'bg-ink-700 text-slate-300 hover:text-mint-300'
-            }`}
+            className={`btn-press shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center transition ${listening ? 'gradient-mint text-ink-950 shadow-glow' : 'bg-ink-700 text-slate-300 hover:text-mint-300'
+              }`}
             aria-label="Voice input"
           >
             <Mic className="w-4.5 h-4.5" />
           </button>
           <button
             onClick={() => setShowCamera(true)}
-            className="btn-press w-10 h-10 rounded-2xl bg-ink-700 text-slate-300 hover:text-mint-300 flex items-center justify-center"
+            className="btn-press shrink-0 w-10 h-10 rounded-2xl bg-ink-700 text-slate-300 hover:text-mint-300 flex items-center justify-center"
             aria-label="Scan receipt"
           >
             <Camera className="w-4.5 h-4.5" />
           </button>
           <button
             onClick={() => handleAdd(input)}
-            className="btn-press gradient-mint text-ink-950 font-semibold rounded-2xl px-4 py-2.5 text-sm flex items-center gap-1.5 shadow-glow-sm"
+            className="btn-press shrink-0 gradient-mint text-ink-950 font-semibold rounded-2xl px-4 py-2.5 text-sm flex items-center gap-1.5 shadow-glow-sm"
           >
             <Plus className="w-4 h-4" /> Add
           </button>
