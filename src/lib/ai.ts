@@ -74,8 +74,37 @@ function cleanNote(text: string): string {
   return note || text.trim().slice(0, 40);
 }
 
-export function parseExpenseText(text: string, source: 'text' | 'voice' = 'text'): ParsedExpense {
+export async function parseExpenseText(text: string, source: 'text' | 'voice' = 'text'): Promise<ParsedExpense> {
   const amount = extractAmount(text);
+
+  // Amount is always extracted locally/deterministically — never left to the AI to invent.
+  // Category + merchant + note: try real AI classification first (handles meaning, not just
+  // keywords — e.g. "grabbed a bite" -> Food). Falls back to fast local keyword matching if
+  // the AI endpoint isn't available (e.g. local `npm run dev`, network hiccup, or no API key
+  // configured yet) so the app always works either way.
+  try {
+    const res = await fetch('/api/categorize', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (res.ok) {
+      const ai = await res.json();
+      if (ai.category) {
+        return {
+          amount,
+          category: ai.category as Category,
+          merchant: ai.merchant ?? detectMerchant(text),
+          note: ai.note ?? cleanNote(text),
+          source,
+        };
+      }
+    }
+  } catch {
+    // fall through to local logic below
+  }
+
   const category = detectCategory(text);
   const merchant = detectMerchant(text);
   const note = cleanNote(text);

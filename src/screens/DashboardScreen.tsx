@@ -31,7 +31,7 @@ export function DashboardScreen() {
 
   const handleAdd = async (text: string, source: 'text' | 'voice' = 'text') => {
     if (!text.trim()) return;
-    const parsed = parseExpenseText(text, source);
+    const parsed = await parseExpenseText(text, source);
     if (parsed.amount === null) {
       flash('Couldn\'t find an amount. Try "₹120 on food at mess".');
       return;
