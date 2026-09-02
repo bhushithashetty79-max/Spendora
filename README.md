@@ -1,7 +1,7 @@
 # Spendora — AI-Powered Expense Tracker 💰
 
 Spendora is an AI-driven personal finance assistant that makes expense tracking effortless. Just describe your spending in plain language, and Spendora handles the rest — categorization, budgeting, and insights, all in one place.
-
+🔗 **Live Demo:** [spendora-sooty.vercel.app](https://spendora-sooty.vercel.app)
 ## ✨ Features
 
 - **Natural-Language Expense Entry** — Add expenses by typing (or speaking) naturally, e.g. *"Spent 250 on lunch with friends"* — no rigid forms required.
