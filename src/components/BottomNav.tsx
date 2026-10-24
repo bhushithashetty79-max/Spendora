@@ -1,6 +1,6 @@
-import { Home, BarChart3, Sparkles, MessageSquare, FileText, User } from 'lucide-react';
+import { Home, BarChart3, Sparkles, MessageSquare, FileText, User, Wallet } from 'lucide-react';
 
-export type TabId = 'dashboard' | 'analytics' | 'insights' | 'nova' | 'reports' | 'profile';
+export type TabId = 'dashboard' | 'analytics' | 'insights' | 'nova' | 'pay' | 'reports' | 'profile';
 
 interface NavItem {
   id: TabId;
@@ -13,6 +13,7 @@ const ITEMS: NavItem[] = [
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'insights', label: 'Insights', icon: Sparkles },
   { id: 'nova', label: 'Nova', icon: MessageSquare },
+  { id: 'pay', label: 'Pay', icon: Wallet },
   { id: 'reports', label: 'Reports', icon: FileText },
   { id: 'profile', label: 'Profile', icon: User },
 ];

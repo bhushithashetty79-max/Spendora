@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { AuthScreen } from '@/screens/AuthScreen';
 import { DashboardScreen } from '@/screens/DashboardScreen';
 import { AnalyticsScreen } from '@/screens/AnalyticsScreen';
 import { InsightsScreen } from '@/screens/InsightsScreen';
 import { NovaScreen } from '@/screens/NovaScreen';
+import { PayScreen } from '@/screens/PayScreen';
 import { ReportsScreen } from '@/screens/ReportsScreen';
 import { ProfileScreen } from '@/screens/ProfileScreen';
 import { BudgetScreen } from '@/screens/BudgetScreen';
@@ -42,6 +43,7 @@ function AppShell() {
       {tab === 'analytics' && <AnalyticsScreen />}
       {tab === 'insights' && <InsightsScreen />}
       {tab === 'nova' && <NovaScreen />}
+      {tab === 'pay' && <PayScreen />}
       {tab === 'reports' && <ReportsScreen />}
       {tab === 'profile' && <ProfileScreen onOpenBudgets={() => setBudgetsOpen(true)} />}
 
