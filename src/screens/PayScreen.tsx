@@ -65,10 +65,15 @@ export function PayScreen() {
         if (status === 'success' && token) {
             (async () => {
                 const { ok, data } = await postJson('/api/paypal-capture-order', { orderId: token });
-                if (ok && data?.status === 'COMPLETED') {
-                    setNotice(`Payment received: ${data.amount} ${data.currency} (PayPal sandbox)`);
+                if (ok && (data?.status === 'COMPLETED' || data?.status === 'PENDING')) {
+                    setNotice(
+                        data.status === 'PENDING'
+                            ? `Payment sent: ${data.amount} ${data.currency} (PayPal sandbox, pending bank clearing)`
+                            : `Payment received: ${data.amount} ${data.currency} (PayPal sandbox)`
+                    );
                 } else {
-                    setError('Could not confirm that payment. Check PayPal and try again.');
+                    const issue = data?.details?.details?.[0]?.issue ?? data?.error ?? 'unknown';
+                    setError(`Could not confirm that payment (${issue}).`);
                 }
             })();
         }
