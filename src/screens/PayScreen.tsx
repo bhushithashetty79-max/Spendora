@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { Wallet, Send, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Wallet, Send, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { useExpenses } from '@/hooks/useData';
+import { CATEGORIES, type Category } from '@/types';
 
 interface Share {
     name: string;
@@ -36,16 +38,48 @@ async function postJson(url: string, body: unknown) {
 }
 
 export function PayScreen() {
+    const { addExpense } = useExpenses();
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [plan, setPlan] = useState<Plan | null>(null);
     const [links, setLinks] = useState<PayLink[]>([]);
+    const [recorded, setRecorded] = useState<number | null>(null);
+    const [notice, setNotice] = useState<string | null>(null);
+    const handledReturn = useRef(false);
+
+    // When PayPal sends the buyer back here, capture the approved payment.
+    useEffect(() => {
+        if (handledReturn.current) return;
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('paypal');
+        const token = params.get('token');
+        if (!status) return;
+        handledReturn.current = true;
+        window.history.replaceState({}, '', window.location.pathname);
+
+        if (status === 'cancel') {
+            setNotice('Payment was cancelled. No money moved.');
+            return;
+        }
+        if (status === 'success' && token) {
+            (async () => {
+                const { ok, data } = await postJson('/api/paypal-capture-order', { orderId: token });
+                if (ok && data?.status === 'COMPLETED') {
+                    setNotice(`Payment received: ${data.amount} ${data.currency} (PayPal sandbox)`);
+                } else {
+                    setError('Could not confirm that payment. Check PayPal and try again.');
+                }
+            })();
+        }
+    }, []);
 
     async function askNova() {
         setError(null);
+        setNotice(null);
         setPlan(null);
         setLinks([]);
+        setRecorded(null);
         if (!text.trim()) {
             setError('Tell Nova what to split, e.g. "split the $60 dinner with Rahul and Priya"');
             return;
@@ -58,6 +92,14 @@ export function PayScreen() {
             return;
         }
         setPlan(data as Plan);
+    }
+
+    async function pickCategory(description: string): Promise<Category> {
+        const { ok, data } = await postJson('/api/categorize', { text: description });
+        if (ok && data && (CATEGORIES as readonly string[]).includes(data.category)) {
+            return data.category as Category;
+        }
+        return 'Other';
     }
 
     async function createRequests() {
@@ -77,8 +119,22 @@ export function PayScreen() {
                 };
             })
         );
-        setLoading(false);
         setLinks(results);
+
+        // Save only the user's own share as their expense.
+        if (results.some((r) => r.approveUrl) && plan.yourShare > 0) {
+            const category = await pickCategory(plan.description);
+            const { error: saveError } = await addExpense({
+                amount: plan.yourShare,
+                category,
+                merchant: null,
+                note: `${plan.description} (your share of $${plan.total.toFixed(2)})`.slice(0, 120),
+                source: 'text',
+            });
+            if (!saveError) setRecorded(plan.yourShare);
+        }
+        setLoading(false);
+
         if (results.some((r) => !r.approveUrl)) {
             setError('Some payment links could not be created. Try again.');
         }
@@ -95,6 +151,13 @@ export function PayScreen() {
                     <p className="text-sm text-slate-400">Split a bill in plain English, then collect with PayPal</p>
                 </div>
             </div>
+
+            {notice && (
+                <div className="glass rounded-2xl p-4 mb-4 flex items-center gap-2 text-mint-300">
+                    <CheckCircle2 className="w-5 h-5 shrink-0" />
+                    <span className="text-sm">{notice}</span>
+                </div>
+            )}
 
             <div className="glass rounded-3xl p-5 space-y-3">
                 <textarea
@@ -165,6 +228,11 @@ export function PayScreen() {
                             )}
                         </div>
                     ))}
+                    {recorded !== null && (
+                        <p className="text-sm text-slate-400 pt-1">
+                            Your ${recorded.toFixed(2)} share was added to your expenses.
+                        </p>
+                    )}
                 </div>
             )}
         </div>

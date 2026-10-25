@@ -29,7 +29,9 @@ function LoadingScreen() {
 
 function AppShell() {
   const { session, loading } = useAuth();
-  const [tab, setTab] = useState<TabId>('dashboard');
+  const [tab, setTab] = useState<TabId>(() =>
+    new URLSearchParams(window.location.search).has('paypal') ? 'pay' : 'dashboard'
+  );
   const [budgetsOpen, setBudgetsOpen] = useState(false);
 
   if (loading) return <LoadingScreen />;
